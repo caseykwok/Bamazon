@@ -145,3 +145,4 @@ The dependencies should now be in the local `node_modules` folder.
 
 4. Selecting `Exit` will exit the application.
 
+![Bamazon Supervisor](assets/images/bamazonSupervisor.gif)
