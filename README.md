@@ -2,11 +2,11 @@
 
 ## Table of Contents 
 
-	1. [Overview](#overview)
-	2. [Installation](#installation)
-	3. [Customer View](#customer)
-	4. [Manager View](#manager)
-	5. [Supervisor View](#supervisor)
+1. [Overview](#overview)
+2. [Installation](#installation)
+3. [Customer View](#customer)
+4. [Manager View](#manager)
+5. [Supervisor View](#supervisor)
 
 <a name="overview"></a>
 ## Overview
