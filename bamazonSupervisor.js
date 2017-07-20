@@ -40,24 +40,12 @@ function displayMainMenu() {
 };
 
 function viewProductSales() {
-	connection.query("SELECT departments.department_id AS 'Department ID', departments.department_name AS 'Department Name', departments.over_head_costs AS 'Over Head Costs', q1.product_sales AS 'Product Sales', (q1.product_sales - departments.over_head_costs) AS 'Total Profit' FROM departments LEFT JOIN (SELECT department_name, SUM(product_sales) AS product_sales FROM products GROUP BY department_name) AS q1 on departments.department_name = q1.department_name ORDER BY (q1.product_sales - departments.over_head_costs) DESC;", function(error, results) {
+	connection.query("SELECT departments.department_id AS 'Department ID', departments.department_name AS 'Department Name', departments.over_head_costs AS 'Overhead Costs', IFNULL(q1.product_sales, 0) AS 'Product Sales', (IFNULL(q1.product_sales, 0) - departments.over_head_costs) AS 'Total Profit' FROM departments LEFT JOIN (SELECT department_name, SUM(product_sales) AS product_sales FROM products GROUP BY department_name) AS q1 on departments.department_name = q1.department_name ORDER BY (IFNULL(q1.product_sales, 0) - departments.over_head_costs) DESC;", function(error, results) {
 		if (error) throw error;
 		console.log("");
 		let data = [];
-		let product_sales;
-		let total_profit;
 		results.forEach(function(result) {
-			if (result["Product Sales"] === null) {
-				product_sales = 0;
-			} else {
-				product_sales = result["Product Sales"].toFixed(2);
-			}
-			if (result["Total Profit"] === null) {
-				total_profit = product_sales - result["Over Head Costs"];
-			} else {
-				total_profit = result["Total Profit"].toFixed(2);
-			}
-			data.push({"Department ID": result["Department ID"], "Department Name": result["Department Name"], "Over Head Costs": "$" + result["Over Head Costs"], "Product Sales": "$" + product_sales, "Total Profit": "$" + total_profit});
+			data.push({"Department ID": result["Department ID"], "Department Name": result["Department Name"], "Overhead Costs": "$" + result["Overhead Costs"], "Product Sales": "$" + result["Product Sales"].toFixed(2), "Total Profit": "$" + result["Total Profit"].toFixed(2)});
 		});
 		console.table(data);
 		displayMainMenu();
